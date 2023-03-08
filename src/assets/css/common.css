@@ -1,0 +1,7 @@
+body, html {
+  font-size: 14px;
+  font-weight: lighter;
+}
+:root {
+  --primary-color: #ff9854;
+}
