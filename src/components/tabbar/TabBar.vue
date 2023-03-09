@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-bar">
+  <div class="tab-bar" v-if="!route.meta.hideTabBar">
     <div class="tab-bar-item" 
       v-for="(item, index) in tabbatData" 
       :key="index"
@@ -14,9 +14,11 @@
 <script setup>
   import tabbatData from "@/assets/data/tabbar"
   import { ref } from 'vue'
-  import { useRouter } from "vue-router";
+  import { useRoute, useRouter } from "vue-router";
 
   const router = useRouter()
+  const route = useRoute()
+
   const getAssetURL = image => {
     return new URL(`../../assets/img/${image}`, import.meta.url).href
   }

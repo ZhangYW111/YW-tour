@@ -1,6 +1,6 @@
-body, html {
+body {
   font-size: 14px;
-  font-weight: lighter;
+  font-weight: normal;
 }
 :root {
   --primary-color: #ff9854;
