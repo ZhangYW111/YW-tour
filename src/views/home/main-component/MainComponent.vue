@@ -22,6 +22,17 @@
       <!-- 日历组件 -->
       <van-calendar v-model:show="showCalendar" type="range" @confirm="onConfirm"  color="#ff9854"/>
     </div>
+    <!-- 价格/人数/关键字 -->
+    <div class="selectOption">
+      <div class="price">价格不限</div>
+      <div class="num">人数不限</div>
+    </div>
+    <div class="keywords">关键字/位置/民宿</div>
+    <!-- 热门建议 -->
+    <div class="hot-suggests">
+      <span v-for="item in hotSuggestsData">{{ item.tagText.text }}</span>
+    </div>
+    <div class="search" @click="searchClick">开始搜索</div>
   </div>
 </template>
 
@@ -29,10 +40,16 @@
   import { useRouter } from "vue-router"
   import useCityStore from "@/stores/modules/city";
   import { fomatMonthDate, getDiffDays } from "@/utils/format_date";
-import { ref } from "vue";
+  import { ref } from "vue";
   const cityStore = useCityStore()
-
   const router = useRouter()
+  defineProps({
+    hotSuggestsData:{
+      type: Array,
+      default:() => []
+    }
+  })
+  
   // 点击城市选择
   const clickCity = () => {
     router.push("/city")
@@ -52,6 +69,12 @@ import { ref } from "vue";
     stayCount.value = getDiffDays(values[0],values[1])
     showCalendar.value = false
   };
+
+  //点击搜索
+  const searchClick = () =>{
+    router.push('/search')
+  }
+
 </script>
 
 <style lang="less" scoped>
@@ -86,7 +109,6 @@ import { ref } from "vue";
       }
     }
   }
-  
   .data {
     display: flex;
     justify-content: space-between;
@@ -112,5 +134,45 @@ import { ref } from "vue";
         color: #333;
       }
     }
+  }
+  .selectOption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 44px;
+    font-size: 14px;
+    padding: 0 40px;
+    border-bottom: 1px solid #f4f3f3;
+    border-top: 1px solid #f4f3f3;
+  }
+  .keywords {
+    font-size: 14px;
+    line-height: 44px;
+    height: 44px;
+    padding: 0px 20px;
+    border-bottom: 1px solid #f4f3f3;
+  }
+  .hot-suggests {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px 0px;
+    padding: 0px 20px;
+    span {
+      color: #3f4954;
+      margin: 3px;
+      padding: 4px 8px;
+      background-color: #f1f3f5;
+      border-radius: 14px;
+    }
+  }
+  .search {
+    height: 38px;
+    font-size: 18px;
+    color:#fff;
+    border-radius: 20px;
+    text-align: center;
+    line-height: 38px;
+    margin: 0 20px;
+    background-image: var(--theme-linear-gradient);
   }
 </style>

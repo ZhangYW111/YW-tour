@@ -3,7 +3,7 @@ import {defineStore} from 'pinia'
 const useCityStore = defineStore("city", {
   state:() => {
     return {
-      currentCity:{cityName:"广州"}
+      currentCity:{cityName:"上海"}
     }
   }
 })
