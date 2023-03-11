@@ -31,7 +31,7 @@
 
 <style lang="less" scoped>
   .tab-bar {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
@@ -41,6 +41,7 @@
     height: 50px;
     text-align: center;
     border-top: 1px solid #edecec;
+    background-color: #fff;
 
     .tab-bar-item {
       flex: 1;

@@ -33,6 +33,13 @@
       <span v-for="item in hotSuggestsData">{{ item.tagText.text }}</span>
     </div>
     <div class="search" @click="searchClick">开始搜索</div>
+    <!-- 分类导航 -->
+    <div class="caregory-bar">
+      <div class="item" v-for="item in categoriesData" :key="item.id">
+        <img :src="item.pictureUrl" alt="">
+        <div>{{ item.title }}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -45,6 +52,10 @@
   const router = useRouter()
   defineProps({
     hotSuggestsData:{
+      type: Array,
+      default:() => []
+    },
+    categoriesData:{
       type: Array,
       default:() => []
     }
@@ -72,7 +83,14 @@
 
   //点击搜索
   const searchClick = () =>{
-    router.push('/search')
+    router.push({
+      path: '/search',
+      query: {
+        startDate:startDate.value,
+        endDate: endDate.value,
+        currentCity:cityStore.currentCity.cityName
+      }
+    })
   }
 
 </script>
@@ -92,17 +110,14 @@
     font-size: 15px;
     font-weight: lighter;
     color: #333;
-
     .my {
       display: flex;
       align-items: center;
       font-size: 12px;
-
       .text {
         margin-right: 8px;
         color: #666;
       }
-
       img {
         width: 18px;
         height: 18px;
@@ -113,7 +128,6 @@
     display: flex;
     justify-content: space-between;
     padding: 0 40px;
-
 
     .entry-data {
       text-align: center;
@@ -174,5 +188,26 @@
     line-height: 38px;
     margin: 0 20px;
     background-image: var(--theme-linear-gradient);
+  }
+  .caregory-bar {
+    display: flex;
+    overflow-x: auto;
+    color: #646566;
+    margin: 0 auto;
+    text-align: center;
+    margin: 15px 20px;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .item {
+      flex-shrink: 0;
+      width: 70px;
+      height: 60px;
+      img {
+        width: 32px;
+        height: 32px;
+        margin-bottom: 5px;
+      }
+    }
   }
 </style>

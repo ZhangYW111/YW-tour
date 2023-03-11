@@ -1,6 +1,7 @@
 <template>
   <div class="favor">
     <div>favor</div>
+    <div v-for="item in 100">ss</div>
   </div>
 </template>
 

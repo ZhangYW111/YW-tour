@@ -1,6 +1,10 @@
 <template>
   <div class="search">
-    <div>search</div>
+    <div>
+      {{ $route.query.startDate }}
+      {{ $route.query.endDate }}
+      {{ $route.query.currentCity }}
+    </div>
   </div>
 </template>
 

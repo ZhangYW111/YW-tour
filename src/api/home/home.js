@@ -6,3 +6,18 @@ export function hotSuggestsAPI() {
     method: 'get'
   })
 }
+export function getCategoriesAPI() {
+  return request({
+    url: '/home/categories',
+    method: 'get'
+  })
+}
+export function getSelectListAPI(currentPage) {
+  return request({
+    url: '/home/houselist',
+    method: 'get',
+    params: {
+      page: currentPage
+    }
+  })
+}
