@@ -12,12 +12,12 @@
     <div class="data">
       <div class="entry-data">
         <span>入住</span>
-        <div @click="showCalendar=true">{{ startDate }}</div>
+        <div @click="showCalendar=true">{{ startDateStr }}</div>
       </div>
       <div class="duration">共{{ stayCount }}晚</div>
       <div class="leave-data">
         <span>离店</span>
-        <div @click="showCalendar=true">{{ endDate }}</div>
+        <div @click="showCalendar=true">{{ endDateStr }}</div>
       </div>
       <!-- 日历组件 -->
       <van-calendar v-model:show="showCalendar" type="range" @confirm="onConfirm"  color="#ff9854"/>
@@ -47,7 +47,9 @@
   import { useRouter } from "vue-router"
   import useCityStore from "@/stores/modules/city";
   import { fomatMonthDate, getDiffDays } from "@/utils/format_date";
-  import { ref } from "vue";
+  import { computed, ref } from "vue";
+  import useMainStore from "@/stores/modules/main";
+  import { storeToRefs } from "pinia";
   const cityStore = useCityStore()
   const router = useRouter()
   defineProps({
@@ -66,30 +68,27 @@
     router.push("/city")
   }
   // 日期处理
-  const nowDate = new Date()
-  const newDate = new Date()
-  newDate.setDate(nowDate.getDate()+1)
-  const startDate = ref(fomatMonthDate(nowDate))
-  const endDate = ref(fomatMonthDate(newDate))
+  const mainStore = useMainStore()
+  const { startDate, endDate } = storeToRefs(mainStore)
+
+  const startDateStr = computed(()=>fomatMonthDate(startDate.value))
+  const endDateStr = computed(()=>fomatMonthDate(endDate.value))
 
   const showCalendar = ref(false)
-  const stayCount = ref(getDiffDays(nowDate,newDate))
+  const stayCount = ref(getDiffDays(startDate.value,endDate.value))
   const onConfirm = (values) => {
-    startDate.value = fomatMonthDate(values[0])
-    endDate.value = fomatMonthDate(values[1])
-    stayCount.value = getDiffDays(values[0],values[1])
+    const selectStartDate = values[0]
+    const selectEndDate = values[1]
+    mainStore.startDate = selectStartDate
+    mainStore.endDate = selectEndDate
+    stayCount.value = getDiffDays(selectStartDate,selectEndDate)
     showCalendar.value = false
   };
 
   //点击搜索
   const searchClick = () =>{
     router.push({
-      path: '/search',
-      query: {
-        startDate:startDate.value,
-        endDate: endDate.value,
-        currentCity:cityStore.currentCity.cityName
-      }
+      path: '/search'
     })
   }
 

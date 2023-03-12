@@ -8,9 +8,12 @@
     </div>
     <!-- 主要区域 -->
     <MainComponent :hotSuggestsData="hotSuggests" :categoriesData="categories"/>
-    <div v-if="topBar">搜索框</div>
     <!-- 精选 -->
     <SelectList :selectListData="selectList" />
+    <!-- 吸顶搜索框 -->
+    <div class="topBar" v-if="topBar">
+      <TopBar />
+    </div>
   </div>
 </template>
 
@@ -18,6 +21,7 @@
   import NavBar from './components/NavBar.vue'
   import MainComponent from './components/MainComponent.vue'
   import SelectList from './components/SelectList.vue'
+  import TopBar from '@/components/topBar/TopBar.vue'
   import { hotSuggestsAPI, getCategoriesAPI, getSelectListAPI } from '@/api/home/home'
   import { ref } from "vue"
 
@@ -55,10 +59,9 @@
   const topBar = ref(false)
   window.addEventListener("scroll", () => {
     const scrollTop = Math.ceil(document.documentElement.scrollTop)
-    if(scrollTop > 100) {
+    if(scrollTop > 350) {
       topBar.value = true
-    }
-    if(scrollTop <100) {
+    } else {
       topBar.value = false
     }
   })
