@@ -4,8 +4,16 @@
     <div class="box">
       <div class="list" v-for="item in selectListData" :key="item.houseId">
         <!-- 两种展示模式,通过每一项的discoveryContentType来判断 -->
-        <HouseItemType9 v-if="item.discoveryContentType === 9" :itemData="item.data"/>
-        <HouseItemType3 v-else-if="item.discoveryContentType === 3" :itemData="item.data"/>
+        <HouseItemType9 
+          v-if="item.discoveryContentType === 9" 
+          :itemData="item.data" 
+          @click="clickItem(item.data.houseId)" 
+        />
+        <HouseItemType3 
+          v-else-if="item.discoveryContentType === 3" 
+          :itemData="item.data" 
+          @click="clickItem(item.data.houseId)"
+        />
       </div>
     </div>
   </div>
@@ -14,6 +22,8 @@
 <script setup>
   import HouseItemType9 from "@/components/houseItem/HouseItemType9.vue"
   import HouseItemType3 from "@/components/houseItem/HouseItemType3.vue"
+  import { useRouter } from "vue-router";
+  const router = useRouter()
 
   defineProps({
     selectListData: {
@@ -21,6 +31,15 @@
       default: () => []
     }
   })
+  const clickItem = (houseId) => {
+    router.push({
+      path: '/detail',
+      query: {
+        houseId
+      }
+    })
+  }
+
 </script>
 
 <style lang="less" scoped>
