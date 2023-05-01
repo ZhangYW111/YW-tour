@@ -1,13 +1,46 @@
 <template>
   <div class="detail">
-    <div>{{ $route.query.houseId }}</div>
+    <van-nav-bar
+      title="房屋详情"
+      left-text="返回"
+      left-arrow
+      @click-left="clickBack"
+    />
+    <!-- 轮播,因为数据是请求到的,v-if确保mainPart不为undefined -->
+    <DetailSwipe :swipeData="mainPart.topModule.housePicture.housePics" v-if="mainPart" />
   </div>
 </template>
 
 <script setup>
+  import DetailSwipe from './components/DetailSwipe.vue'
+  import { ref, computed } from "vue";
+  import { useRouter, useRoute } from "vue-router";
+  import { getDetailInfo } from "@/api/detail/detail";
+  const router = useRouter();
+  const route = useRoute();
 
+  // 返回
+  const clickBack = () => {
+    router.back();
+  };
+
+  // 获取详情数据
+  const detailData = ref({});
+  const mainPart = computed(() => detailData.value.mainPart);
+  getDetailInfo(route.query.houseId).then((res) => {
+    console.log(res.data.data);
+    detailData.value = res.data.data;
+  });
 </script>
 
 <style lang="less" scoped>
-
+  :deep(.van-nav-bar__text) {
+    color: var(--primary-color);
+  }
+  :deep(.van-nav-bar__left i) {
+    color: var(--primary-color);
+  }
+  :deep(.van-nav-bar__title) {
+    font-weight: 400;
+  }
 </style>

@@ -27,10 +27,10 @@
 
 
 <script setup>
+  import CityGroup from './components/CityGroup.vue'
   import { useRouter } from "vue-router";
   import { ref } from "vue";
   import { getCityAllAPI } from '@/api/city/city'
-  import CityGroup from './components/CityGroup.vue'
 
   const router = useRouter();
 
