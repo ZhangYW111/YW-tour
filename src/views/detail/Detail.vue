@@ -7,12 +7,17 @@
       @click-left="clickBack"
     />
     <!-- 轮播,因为数据是请求到的,v-if确保mainPart不为undefined -->
-    <DetailSwipe :swipeData="mainPart.topModule.housePicture.housePics" v-if="mainPart" />
+    <Swipe :swipeData="mainPart.topModule.housePicture.housePics" v-if="mainPart" />
+    <!-- 同上，加？也可以 -->
+    <Infos :DetailInfo="mainPart?.topModule"/>
+    <ContentModule />
   </div>
 </template>
 
 <script setup>
-  import DetailSwipe from './components/DetailSwipe.vue'
+  import Swipe from './components/Swipe.vue'
+  import Infos from './components/Infos.vue'
+  import ContentModule from './components/ContentModule.vue'
   import { ref, computed } from "vue";
   import { useRouter, useRoute } from "vue-router";
   import { getDetailInfo } from "@/api/detail/detail";
@@ -42,5 +47,8 @@
   }
   :deep(.van-nav-bar__title) {
     font-weight: 400;
+  }
+  :deep(.van-nav-bar__title) {
+    color: var(--primary-color);
   }
 </style>

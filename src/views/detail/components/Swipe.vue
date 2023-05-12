@@ -12,13 +12,12 @@
 </template>
 
 <script setup>
-  const prors = defineProps({
+  const props = defineProps({
     swipeData: {
       type: Array,
       default: () => []
     }
   })
-
 
 </script>
 
